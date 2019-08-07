@@ -19,8 +19,12 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="0.8*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <ListBox Grid.Column="0" ItemsSource="{Binding Phones}"
+        <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Phones}"
                  SelectedItem="{Binding SelectedPhone}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -33,7 +37,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Column="1" DataContext="{Binding SelectedPhone}">
+        <StackPanel Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedPhone}">
             <TextBlock Text="Выбранный элемент"  />
             <TextBlock Text="Модель" />
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
@@ -42,5 +46,6 @@
             <TextBlock Text="Цена" />
             <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
+        <TextBlock Grid.Row="1" Text="{Binding TimeText, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding TimeColor, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </Window>

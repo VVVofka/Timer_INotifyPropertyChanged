@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System;
+using System.Windows.Media;
 
 namespace TstWpfApp1 {
 	public class ApplicationViewModel : INotifyPropertyChanged {
@@ -14,11 +15,16 @@ namespace TstWpfApp1 {
 			else {
 				Console.WriteLine("{0} comp:{1}", DateTime.Now.ToString("h:mm:ss.fff"), phone.Company);
 				SelectedPhone.Company = DateTime.Now.ToString("h:mm:ss.fff");
+				TimeColor = (DateTime.Now.Second & 1) == 0 ? Brushes.Black : Brushes.Red;
+				//Console.WriteLine("{0}", TimeColor);
+				TimeText = " tt= " + DateTime.Now.ToString("h:mm:ss.fff");
 			}
 		}
 		//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 		private Phone selectedPhone;
+		private Brush timecolor;
+		private string timetext;
 
 		public ObservableCollection<Phone> Phones { get; set; }
 		public Phone SelectedPhone {
@@ -27,8 +33,21 @@ namespace TstWpfApp1 {
 				selectedPhone = value;
 				OnPropertyChanged("SelectedPhone");
 			}
-		}
-
+		} // /////////////////////////////////////////////////////////////////////////////////
+		public Brush TimeColor {
+			get { return timecolor; }
+			set {
+				timecolor = value;
+				OnPropertyChanged("TimeColor");
+			}
+		} // /////////////////////////////////////////////////////////////////////////////////
+		public string TimeText {
+			get { return timetext; }
+			set {
+				timetext = value;
+				OnPropertyChanged("TimeText");
+			}
+		} // /////////////////////////////////////////////////////////////////////////////////
 		public ApplicationViewModel() {
 			stateTimer = new Timer(CheckStatus, SelectedPhone, 1000, 1000);
 			//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -42,12 +61,13 @@ namespace TstWpfApp1 {
 		}
 		~ApplicationViewModel() {
 			stateTimer.Dispose();
-		}
+		} // ///////////////////////////////////////////////////////////////////////////////////
 		//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName]string prop = "") {
 			if (PropertyChanged != null)
 				PropertyChanged(this, new PropertyChangedEventArgs(prop));
-		}
+		} // /////////////////////////////////////////////////////////////////////////////////////////
 	}
 }
+//  <TextBlock Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding TimerColor, UpdateSourceTrigger=PropertyChanged}"  />

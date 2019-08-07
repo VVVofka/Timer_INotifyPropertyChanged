@@ -9,13 +9,6 @@ namespace TstWpfApp1 {
 		private string company;
 		private int price;
 
-		public Phone() {
-			//stateTimer.Change(0, 500);
-			//Console.WriteLine("\nChanging period to .5 seconds.\n");
-		}
-		~Phone() {
-		}
-
 		public string Title {
 			get { return title; }
 			set {
