@@ -13,6 +13,12 @@
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14" />
         </Style>
+        <GeometryCollection x:Key="GeometryPC">
+            <RectangleGeometry Rect="-60,-37,120,60"  RadiusX="5" RadiusY="5" />
+            <RectangleGeometry Rect="-55,-32,110,50"  RadiusX="3" RadiusY="3" />
+            <RectangleGeometry Rect="-5,23,10,10" RadiusX="0" RadiusY="0" />
+            <RectangleGeometry Rect="-30,33,60,6" RadiusX="2" RadiusY="2" />
+        </GeometryCollection>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,7 +30,7 @@
             <RowDefinition Height="*" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Phones}"
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Phones}"
                  SelectedItem="{Binding SelectedPhone}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -37,7 +43,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedPhone}">
+        <StackPanel Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedPhone}">
             <TextBlock Text="Выбранный элемент"  />
             <TextBlock Text="Модель" />
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
@@ -46,6 +52,14 @@
             <TextBlock Text="Цена" />
             <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <TextBlock Grid.Row="1" Text="{Binding TimeText, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding TimeColor, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding TimeText, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding TimeColor, UpdateSourceTrigger=PropertyChanged}" />
+        <Canvas Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Path x:Name="pcDirect" Fill="{Binding TimeColor, UpdateSourceTrigger=PropertyChanged}" >
+                <Path.Data >
+                    <GeometryGroup  FillRule="EvenOdd" Children="{DynamicResource GeometryPC}"/>
+                </Path.Data>
+            </Path>
+        </Canvas>
+
     </Grid>
 </Window>
